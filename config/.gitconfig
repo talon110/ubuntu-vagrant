@@ -1,0 +1,16 @@
+[user]
+	email = talon110@gmail.com
+	name = Reed Martin
+[color]
+	ui = true
+[alias]
+	o = checkout
+	ci = commit
+	s = status -s
+	br = branch
+	lg = log --oneline --decorate --all --graph
+	hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+	type = cat-file -t
+	dump = cat-file -p
+[push]
+	default = matching
