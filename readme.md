@@ -1,11 +1,11 @@
 Readme
 ----------------------
 
-#Purpose
+###Purpose
 This vagrant file configures a VM based on Ubuntu x64 which contains the latest
 version of the Cloud9 SDK.
 
-#Includes
+###Includes
 - Apt
 - Build-essential
 - Mysql 5.5.3
@@ -21,7 +21,7 @@ version of the Cloud9 SDK.
 - Node-gyp
 - Cloud9 SDK
 
-#Usage
+###Usage
 Before running 'vagrant up', the following steps must be taken:
 - Install VirtualBox
 - Install Vagrant
