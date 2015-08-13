@@ -67,7 +67,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, inline: "apt-get update", run: "always"
 
   # Remove provision file if VM is reprovisioned
-  config.vm.provision :shell, inline: "rm .vagrant_provision.lock"
+  config.vm.provision :shell, inline: "if [ -f .vagrant_provision.lock ]; then rm .vagrant_provision.lock; fi"
 
   # Install Cloud9 IDE
   config.vm.provision :shell, :path => "bootstrap.sh", privileged: false
