@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Configurate the virtual machine to use 2GB of RAM
   config.vm.provider :virtualbox do |vb|
     vb.memory = 3072
-    vb.cpus = 4
+    vb.cpus = 8
   end
 
   # Forward the Rails server default port to the host
@@ -23,6 +23,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder "../sync/www", "/home/vagrant/www", create: true
   config.vm.synced_folder "../sync/projects", "/home/vagrant/project", create: true
 
+  # Update the system; run every time the system is brought up
+  config.vm.provision :shell, inline: "apt-get update", run: "always"
+
   # Use Chef Solo to provision our virtual machine
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = ["cookbooks", "site-cookbooks"]
@@ -34,7 +37,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.add_recipe "ruby_build"
     chef.add_recipe "rbenv::user"
     chef.add_recipe "rbenv::vagrant"
-    chef.add_recipe "bundler"
     chef.add_recipe "vim"
     chef.add_recipe "mysql::server"
     chef.add_recipe "mysql::client"
@@ -42,29 +44,27 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.add_recipe "mongodb"
     chef.add_recipe "nginx"
 
-    # Install Ruby 2.2.1 and Bundler
+    # Install Ruby 2.2.1, Bundler, and Rails
     # Set an empty root password for MySQL to make things simple
     chef.json = {
       rbenv: {
         user_installs: [{
-          user: 'vagrant',
-          rubies: ["2.2.1"],
-          global: "2.2.1",
+          user: "vagrant",
+          rubies: ["2.2.3"],
+          global: "2.2.3",
           gems: {
-            "2.2.1" => [
-              { name: "bundler" }
+            "2.2.3" => [
+              { name: "bundler" },
+              { name: "rails" }
             ]
           }
         }]
       },
       mysql: {
-        server_root_password: ''
+        server_root_password: ""
       }
     }
   end
-
-  # Update the system; run every time the system is brought up
-  config.vm.provision :shell, inline: "apt-get update", run: "always"
 
   # Remove provision file if VM is reprovisioned
   config.vm.provision :shell, inline: "if [ -f .vagrant_provision.lock ]; then rm .vagrant_provision.lock; fi"
