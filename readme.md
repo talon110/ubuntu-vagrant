@@ -4,7 +4,7 @@ VirtualBox/Ubuntu 14.04/Cloud9 SDK VM Readme
 ##Purpose
 This Vagrant project configures a VM based on Ubuntu 14.04 x64 which contains the latest version of the Cloud9 SDK.
 
-Running `vagrant up` in this project will configure a Ubuntu 14.04 x64 virtual machine within VirtualBox for serving Cloud9 Stand-alone. It will setup nginx and create a `~/projects` folder in which to work on any projects. This is a perfect project if you want to use the functionality of Cloud9 but can't always be connected to Cloud9's servers.
+Running `vagrant up` in this project will configure a Ubuntu 14.04 x64 virtual machine within VirtualBox for serving Cloud9 Stand-alone. It will setup nginx and create a `~/projects` folder in which to work on any projects. This is a perfect project if you want to use the functionality of Cloud9 but can't always be connected to Cloud9's servers. All components necessary to test simple websites should already be included, and as a bonus, the install includes the Heroku Toolbelt.
 
 ##Includes
 - Apt
