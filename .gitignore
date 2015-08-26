@@ -2,3 +2,4 @@
 cookbooks/
 tmp/
 Cheffile.lock
+id_rsa*
