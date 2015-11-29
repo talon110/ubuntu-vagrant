@@ -17,7 +17,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 3000, host: 3000
   config.vm.network :forwarded_port, guest: 80, host: 8080, auto_correct: true
   config.vm.network :forwarded_port, guest: 27017, host: 27117
-  config.vm.network :forwarded_port, guest: 8181, host: 8181, auto_correct: true
 
 
   config.vm.synced_folder "../sync/www", "/home/vagrant/www", create: true
@@ -32,37 +31,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     chef.add_recipe "apt"
     chef.add_recipe "build-essential"
-    chef.add_recipe "nodejs"
-    chef.add_recipe "nodejs::npm"
-    chef.add_recipe "ruby_build"
-    chef.add_recipe "ruby_rbenv::user"
     chef.add_recipe "vim"
-    chef.add_recipe "mysql::server"
-    chef.add_recipe "mysql::client"
-    chef.add_recipe "postgresql"
-    chef.add_recipe "mongodb"
-    chef.add_recipe "nginx"
 
-    # Install Ruby 2.2.1, Bundler, and Rails
-    # Set an empty root password for MySQL to make things simple
-    chef.json = {
-      rbenv: {
-        user_installs: [{
-          user: "vagrant",
-          rubies: ["2.2.3"],
-          global: "2.2.3",
-          gems: {
-            "2.2.3" => [
-              { name: "bundler" },
-              { name: "rails" }
-            ]
-          }
-        }]
-      },
-      mysql: {
-        server_root_password: ""
-      }
-    }
   end
 
   # Remove provision file if VM is reprovisioned
@@ -74,7 +44,4 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Copy custom config files
   config.vm.provision :shell, :path => "configs.sh", privileged: false, run: "always"
 
-  # Run Cloud9 IDE
-  config.vm.provision :shell, inline: "forever start /home/vagrant/cloud9/server.js -w ~/project/",
-    run: "always", privileged: false
 end
